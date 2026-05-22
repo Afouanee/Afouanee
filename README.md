@@ -1,9 +1,9 @@
 <h1 align="center">Hello, moi c'est Afouane 👋</h1>
 
 <p align="center">
-  Ingénieur informatique · IA / Data · XR · Web  
+  Développeur Fullstack · IA & Automatisation · Data · XR
   <br/>
-  Étudiant en 5e année à l'ESIEE Paris 🎓 · Apprenti chez Enedis ⚡
+  Étudiant ingénieur en 5e année à l'ESIEE Paris 🎓 · 🚀 Recherche un poste en IA & Automatisation pour septembre 2026
 </p>
 
 ---
@@ -14,7 +14,8 @@
 ---
 
 ## 🧠 À propos
-- 🎓 Étudiant ingénieur à l'ESIEE Paris — spécialisation 3D & Technologies des Médias (promo 2026)
+- 🎓 Étudiant ingénieur à l'ESIEE Paris — spécialisation Informatique & Applications, Ingénierie 3D & Technologies des Médias (promo 2026)
+- ☕ En stage **Développeur Fullstack · IA & Automatisation** chez Café Crème — workflows IA, LLMs (OpenAI), agents Python, Make/n8n
 - ⚡ Apprenti chez Enedis — MCO, support utilisateurs, échanges inter-SI et automatisation
 - 🤖 Passionné par l'IA appliquée, la data et la computer vision
 - 🕹️ Intérêt pour le game dev, la VR/XR et les expériences immersives
@@ -24,25 +25,32 @@
 
 ## 🛠️ Compétences principales
 
-### 🔹 Développement
+### 🔹 Langages
 <div>
-  <img src="https://skillicons.dev/icons?i=python,java,cpp,cs,ts,bash" height="40" />
+  <img src="https://skillicons.dev/icons?i=python,java,cpp,c,cs,ts,bash" height="40" />
 </div>
 
 ### 🔹 Web & Backend
 <div>
-  <img src="https://skillicons.dev/icons?i=react,nextjs,vuejs,flask,spring,php,html,mysql" height="40" />
+  <img src="https://skillicons.dev/icons?i=react,nextjs,vuejs,angular,flask,fastapi,spring,php,html,mysql,postgres,sqlite,firebase" height="40" />
 </div>
 
-### 🔹 Data & IA
+### 🔹 Data, IA & Automatisation
 <div>
-  <img src="https://skillicons.dev/icons?i=tensorflow,opencv,neo4j" height="40" />
+  <img src="https://skillicons.dev/icons?i=tensorflow,sklearn,opencv,neo4j" height="40" />
 </div>
+
+*Pandas · Keras · Plotly / Dash · LLMs (OpenAI) · Make · n8n*
 
 ### 🔹 XR & Informatique graphique
 <div>
-  <img src="https://skillicons.dev/icons?i=unity,cmake,opengl" height="40" />
+  <img src="https://skillicons.dev/icons?i=unity,cmake" height="40" />
 </div>
+
+*OpenGL · GLSL · Shaders · Meta Quest 3 (VR/XR)*
+
+### 🔹 Embarqué & Électronique
+*C · Assembleur · Arduino · STM32 · KiCad · Proteus*
 
 ### 🔹 Outils & environnements
 <div>
@@ -52,9 +60,11 @@
 ---
 
 ## 📫 Contact
-- **Email** : afouanemouhamad@gmail.com  
-- **LinkedIn** : https://linkedin.com/in/afouane-mouhamad  
-- **GitHub** : https://github.com/afouanee  
+🚀 **Ouvert aux opportunités en IA & Automatisation (à partir de septembre 2026)**
+
+- **Email** : afouanemouhamad@gmail.com
+- **LinkedIn** : https://linkedin.com/in/afouane-mouhamad
+- **GitHub** : https://github.com/afouanee
 
 ---
 
