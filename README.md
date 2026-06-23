@@ -14,12 +14,12 @@
 ---
 
 ## 🧠 À propos
-- 🎓 Étudiant ingénieur à l'ESIEE Paris — spécialisation Informatique & Applications, Ingénierie 3D & Technologies des Médias (promo 2026)
-- ☕ En stage **Développeur Fullstack · IA & Automatisation** chez Café Crème — workflows IA, LLMs (OpenAI), agents Python, Make/n8n
-- ⚡ Apprenti chez Enedis — MCO, support utilisateurs, échanges inter-SI et automatisation
-- 🤖 Passionné par l'IA appliquée, la data et la computer vision
+- 🎓 Étudiant ingénieur à l'ESIEE Paris · spécialisation Informatique & Applications, Ingénierie 3D & Technologies des Médias (promo 2026)
+- ☕ En stage **Développeur Fullstack · IA & Automatisation** chez Café Crème : workflows IA, LLMs (Mistral, OpenAI), RAG, agents Python, Make/n8n
+- ⚡ Apprenti chez Enedis : MCO, support utilisateurs, échanges inter-SI et automatisation
+- 🤖 Passionné par l'IA appliquée, les LLMs, la data et la computer vision
 - 🕹️ Intérêt pour le game dev, la VR/XR et les expériences immersives
-- 🌍 Motivé par des projets internationaux
+- 🌍 Ouvert à l'international (Inde, Émirats, Singapour, Malaisie, Angleterre, Arabie saoudite)
 
 ---
 
@@ -32,7 +32,7 @@
 
 ### 🔹 Web & Backend
 <div>
-  <img src="https://skillicons.dev/icons?i=react,nextjs,vuejs,angular,flask,fastapi,spring,php,html,mysql,postgres,sqlite,firebase" height="40" />
+  <img src="https://skillicons.dev/icons?i=react,nextjs,vuejs,angular,nodejs,express,flask,fastapi,php,html,mysql,postgres,sqlite,firebase" height="40" />
 </div>
 
 ### 🔹 Data, IA & Automatisation
@@ -40,7 +40,7 @@
   <img src="https://skillicons.dev/icons?i=tensorflow,sklearn,opencv,neo4j" height="40" />
 </div>
 
-*Pandas · Keras · Plotly / Dash · LLMs (OpenAI) · Make · n8n*
+*LLMs (Mistral, OpenAI) · RAG · Agents IA · Pandas · Keras · Plotly / Dash · Chart.js · Make · n8n · Cypher · Graph Data Science*
 
 ### 🔹 XR & Informatique graphique
 <div>
@@ -64,7 +64,7 @@
 
 - **Email** : afouanemouhamad@gmail.com
 - **LinkedIn** : https://linkedin.com/in/afouane-mouhamad
-- **GitHub** : https://github.com/afouanee
+- **GitHub** : https://github.com/Afouanee
 
 ---
 
