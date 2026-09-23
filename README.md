@@ -1,9 +1,9 @@
 <h1 align="center">Hello, moi c'est Afouane 👋</h1>
 
 <p align="center">
-  Développeur Full Stack · IA & Automatisation
+  Ingénieur informatique, Full Stack & IA
   <br/>
-  Ingénieur ESIEE Paris (diplôme septembre 2026) 🎓 · 🚀 Recherche un poste à partir de septembre 2026
+  Ingénieur ESIEE Paris (diplômé septembre 2026) 🎓 · 🚀 En recherche active d'un poste
 </p>
 
 ---
@@ -15,8 +15,8 @@
 
 ## 🧠 À propos
 - 🎓 Ingénieur ESIEE Paris · spécialisation Informatique & Applications, Ingénierie 3D & Technologies des Médias (promo 2026)
-- ☕ Stage **Développeur Full Stack · IA & Automatisation** chez Café Crème (terminé) : chatbot IA multi-tenant en production, assistant RAG interne, automatisation des briefs commerciaux
-- ⚡ Apprenti chez Enedis : MCO, outil Python d'automatisation, dashboard Power BI de supervision, échanges inter-SI
+- ☕ Stage **Ingénieur informatique, Full Stack & IA** chez Café Crème (terminé) : chatbot IA multi-tenant en production, assistant RAG interne, automatisation des briefs commerciaux
+- ⚡ Alternance chez Enedis : MCO, outil Python d'automatisation, dashboard Power BI de supervision, échanges inter-SI
 - 🤖 Passionné par l'IA appliquée (LLMs, RAG, agents), la data et le développement produit de bout en bout
 - 🕹️ Intérêt pour le game dev, la VR/XR et les expériences immersives
 - 🌍 Ouvert à l'international (Inde, Émirats, Singapour, Malaisie, Angleterre, Arabie saoudite)
@@ -68,7 +68,7 @@
 ---
 
 ## 📫 Contact
-🚀 **Ouvert aux opportunités en Développement Full Stack · IA & Automatisation (à partir de septembre 2026)**
+🚀 **En recherche active d'un poste d'Ingénieur informatique, Full Stack & IA**
 
 - **Email** : afouanemouhamad@gmail.com
 - **LinkedIn** : https://linkedin.com/in/afouane-mouhamad
