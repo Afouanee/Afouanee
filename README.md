@@ -1,8 +1,8 @@
 <div align="center">
 
-![header](https://capsule-render.vercel.app/api?type=slice&color=0:0d0d0d,100:e63946&height=200&section=header&text=Afouane%20Mouhamad&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Ingénieur%20Full%20Stack%20%26%20IA%20·%20ESIEE%20Paris%202026&descAlignY=58&descSize=16&animation=twinkling&reversal=true)
+![header](https://capsule-render.vercel.app/api?type=waving&color=e63946&height=200&section=header&text=Afouane%20Mouhamad&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Ingénieur%20Full%20Stack%20%26%20IA%20·%20ESIEE%20Paris%202026&descAlignY=58&descSize=16&animation=fadeIn)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=20&pause=1000&color=e63946&center=true&vCenter=true&width=700&lines=Full+Stack+Engineer+%F0%9F%9A%80;RAG+%7C+Agents+LLM+%7C+MCP+%F0%9F%A4%96;Build+products+from+idea+to+production+%E2%9A%A1;Open+to+opportunities+%F0%9F%8C%8D)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=22&pause=1200&color=e63946&center=true&vCenter=true&width=700&lines=Full+Stack+Engineer+%F0%9F%9A%80;IA+appliqu%C3%A9e+%7C+RAG+%7C+Agents+LLM+%F0%9F%A4%96;Build+products+from+idea+to+production+%E2%9A%A1;Open+to+opportunities+%F0%9F%8C%8D)](https://git.io/typing-svg)
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-afouanee.dev-e63946?style=for-the-badge&logo=google-chrome&logoColor=white)](https://afouanee.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Afouane%20Mouhamad-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/afouane-mouhamad)
@@ -28,11 +28,26 @@
 
 <div align="center">
 
+<table>
+<tr>
+<td>
+
 ![Afouane's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Afouanee&show_icons=true&theme=github_dark&hide_border=true&title_color=e63946&icon_color=e63946&bg_color=0d0d0d&text_color=f5f5f5&include_all_commits=true&count_private=true)
+
+</td>
+<td>
+
+![GitHub Streak](https://streak-stats.demolab.com/?user=Afouanee&theme=github-dark-blue&hide_border=true&stroke=e63946&ring=e63946&fire=e63946&currStreakLabel=e63946&background=0d0d0d&sideLabels=f5f5f5&dates=888888)
+
+</td>
+</tr>
+</table>
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Afouanee&layout=compact&theme=github_dark&hide_border=true&title_color=e63946&bg_color=0d0d0d&text_color=f5f5f5&langs_count=8)
 
 </div>
+
+---
 
 ---
 
@@ -128,4 +143,4 @@ Détection d'émotions sur vidéos d'entretien, restitution en temps réel (proj
 
 ---
 
-![footer](https://capsule-render.vercel.app/api?type=slice&color=0:e63946,100:0d0d0d&height=120&section=footer&fontColor=ffffff&reversal=true)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=e63946&height=120&section=footer&fontColor=ffffff)
