@@ -49,24 +49,6 @@
 
 ---
 
-## 🏆 Trophées
-
-<div align="center">
-
-![Trophées](https://github-profile-trophy.vercel.app/?username=Afouanee&theme=darkhub&no-frame=true&no-bg=true&margin-w=8&column=6&title_color=e63946)
-
-</div>
-
----
-
-## 📈 Graphe d'activité
-
-<div align="center">
-
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Afouanee&bg_color=0d0d0d&color=e63946&line=e63946&point=ffffff&area=true&hide_border=true&area_color=e63946)
-
-</div>
-
 ---
 
 ## 🚀 Projets phares
