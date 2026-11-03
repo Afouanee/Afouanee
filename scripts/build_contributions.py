@@ -1,4 +1,5 @@
 """Génère la carte des contributions survolée par l'avion du portfolio, à partir des vraies données GitHub.
+Une image SVG ne peut pas exécuter de hasard : le trajet est tiré au sort à chaque génération, donc chaque jour.
 
     python scripts/build_contributions.py
 
@@ -10,6 +11,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import random
 import subprocess
 import sys
 import urllib.request
@@ -32,9 +34,11 @@ SCALE = {
 MONTHS = ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"]
 
 CELL, GAP, LEFT, TOP = 17, 4, 44, 112
-SPEED = 96  # px/s, comme dans BackgroundSnake.tsx du portfolio
+SPEED_RANGE = (70, 135)  # px/s par étape, autour des 96 px/s du portfolio
+MIN_SPEED_FACTOR = 0.5  # ralentit en approchant une destination, comme dans le portfolio
 PLANE = 15  # demi-envergure
-BUCKET_WEEKS = 7  # une destination au plus par tranche de semaines
+STOPS = 12  # destinations par trajet
+MIN_HOP = 170  # distance minimale entre deux destinations
 
 
 def fetch() -> dict:
@@ -56,16 +60,56 @@ def cell_xy(week_index: int, day: dict) -> tuple[int, int]:
     return LEFT + week_index * (CELL + GAP), TOP + weekday * (CELL + GAP)
 
 
-def destinations(weeks: list) -> list[tuple[float, float]]:
-    """Le jour le plus actif de chaque tranche de semaines : l'avion suit l'activité réelle."""
-    points = []
-    for start in range(0, len(weeks), BUCKET_WEEKS):
-        days = [(day["contributionCount"], i, day) for i, week in enumerate(weeks[start:start + BUCKET_WEEKS], start) for day in week["contributionDays"]]
-        count, i, day = max(days, key=lambda d: d[0])
-        if count:
-            x, y = cell_xy(i, day)
-            points.append((x + CELL / 2, y + CELL / 2))
-    return points
+def destinations(weeks: list, rng: random.Random) -> list[tuple[float, float]]:
+    """Tire au sort des jours actifs, les plus chargés ayant plus de chances : le vol reste lié à l'activité réelle."""
+    days = [(cell_xy(i, day), day["contributionCount"]) for i, week in enumerate(weeks) for day in week["contributionDays"] if day["contributionCount"]]
+    centers = [(x + CELL / 2, y + CELL / 2) for (x, y), _ in days]
+    weights = [count ** 0.5 for _, count in days]
+    stops: list[tuple[float, float]] = []
+    for _ in range(STOPS * 40):
+        if len(stops) == STOPS:
+            break
+        point = rng.choices(centers, weights)[0]
+        if not stops or (math.dist(point, stops[-1]) >= MIN_HOP and point not in stops):
+            stops.append(point)
+    return stops
+
+
+def edge_point(rng: random.Random, W: float, H: float) -> tuple[float, float]:
+    """Un point hors de la carte, sur un bord au hasard."""
+    side = rng.choice("lrtb")
+    if side in "lr":
+        return (-40.0 if side == "l" else W + 40.0, rng.uniform(TOP, H - 40))
+    return (rng.uniform(60, W - 60), -40.0 if side == "t" else H + 40.0)
+
+
+def plan_flight(weeks: list, W: float, H: float, rng: random.Random) -> dict:
+    """Trajet commun aux deux thèmes : points de passage, vitesse variable, instants de passage aux destinations."""
+    stops = destinations(weeks, rng)
+    anchors = [edge_point(rng, W, H), *stops, edge_point(rng, W, H)]
+    samples = 24
+    route = smooth(anchors, samples)
+    lengths, clock = [0.0], [0.0]
+    speeds = [rng.uniform(*SPEED_RANGE) for _ in range(len(anchors) - 1)]
+    for k, (a, b) in enumerate(zip(route, route[1:])):
+        step = math.dist(a, b)
+        leg, u = k // samples, (k % samples + 0.5) / samples
+        factor = MIN_SPEED_FACTOR + (1 - MIN_SPEED_FACTOR) * math.sin(math.pi * u)
+        lengths.append(lengths[-1] + step)
+        clock.append(clock[-1] + step / (speeds[leg] * factor))
+    total, dur = lengths[-1], clock[-1]
+    keep = sorted({*range(0, len(route), 4), len(route) - 1})
+    # Les instants doivent rester strictement croissants pour SMIL.
+    times = [clock[k] / dur for k in keep]
+    return {
+        "d": "M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in route),
+        "length": total,
+        "dur": dur,
+        "key_points": ";".join(f"{lengths[k] / total:.4f}" for k in keep),
+        "key_offsets": [lengths[k] for k in keep],
+        "key_times": ";".join(f"{t:.4f}" for t in times),
+        "passes": [(stop, clock[(i + 1) * samples] / dur) for i, stop in enumerate(stops)],
+    }
 
 
 def smooth(points: list[tuple[float, float]], samples: int = 24) -> list[tuple[float, float]]:
@@ -96,7 +140,7 @@ def plane_path(s: float) -> str:
     ])
 
 
-def render(calendar: dict, theme: str) -> str:
+def render(calendar: dict, theme: str, flight: dict) -> str:
     t, scale = THEMES[theme], SCALE[theme]
     weeks, total = calendar["weeks"], calendar["totalContributions"]
     step = CELL + GAP
@@ -126,28 +170,19 @@ def render(calendar: dict, theme: str) -> str:
             fill = scale[level - 1] if level else t["chip"]
             s.raw(f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="4" fill="{fill}"/>')
 
-    # Trajectoire : entre par la gauche, passe par les destinations, sort par la droite, en boucle.
-    stops = destinations(weeks)
-    mid = TOP + 3.5 * step
-    route = smooth([(-40.0, mid), *stops, (W + 40.0, mid)])
-    lengths = [0.0]
-    for a, b in zip(route, route[1:]):
-        lengths.append(lengths[-1] + math.dist(a, b))
-    length = lengths[-1]
-    dur = length / SPEED
-    d = "M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in route)
+    d, length, dur = flight["d"], flight["length"], flight["dur"]
+    motion = f'calcMode="linear" keyTimes="{flight["key_times"]}" dur="{dur:.2f}s" repeatCount="indefinite"'
 
     s.raw('<g clip-path="url(#c)">')
     # Traînée : un trait en pointillés dont le seul tiret visible suit l'avion. Deux épaisseurs pour le fondu.
     for trail, width, opacity in [(190, 1.5, 0.22), (90, 2.5, 0.4)]:
+        offsets = ";".join(f"{trail - o:.1f}" for o in flight["key_offsets"])
         s.raw(
             f'<path d="{d}" fill="none" stroke="{t["ink"]}" stroke-width="{width}" stroke-linecap="round" opacity="{opacity}" stroke-dasharray="{trail} {length + 2 * trail:.0f}" stroke-dashoffset="{trail}">'
-            f'<animate attributeName="stroke-dashoffset" values="{trail};{trail - length:.1f}" dur="{dur:.2f}s" repeatCount="indefinite"/></path>'
+            f'<animate attributeName="stroke-dashoffset" values="{offsets}" {motion}/></path>'
         )
     # À chaque destination, un anneau rouge s'allume au passage de l'avion.
-    for x, y in stops:
-        index = min(range(len(route)), key=lambda k: math.dist(route[k], (x, y)))
-        f = lengths[index] / length
+    for (x, y), f in flight["passes"]:
         before, after = max(0.0001, f - 0.004), min(0.998, f + 0.07)
         times = f"0;{before:.4f};{f:.4f};{after:.4f};1"
         s.raw(
@@ -158,7 +193,7 @@ def render(calendar: dict, theme: str) -> str:
     # Contour couleur de carte : l'avion reste lisible au-dessus des cases rouges.
     s.raw(
         f'<path d="{plane_path(PLANE)}" fill="{t["ink"]}" stroke="{t["card"]}" stroke-width="2" paint-order="stroke" stroke-linejoin="round">'
-        f'<animateMotion path="{d}" rotate="auto" dur="{dur:.2f}s" repeatCount="indefinite"/></path></g>'
+        f'<animateMotion path="{d}" rotate="auto" keyPoints="{flight["key_points"]}" {motion}/></path></g>'
     )
     return s.render()
 
@@ -167,8 +202,11 @@ def main() -> None:
     calendar = fetch()
     if not calendar["weeks"] or not calendar["totalContributions"]:
         raise SystemExit("Données vides : fichiers conservés.")
+    # Nouveau trajet à chaque génération, identique dans les deux thèmes.
+    step = CELL + GAP
+    flight = plan_flight(calendar["weeks"], 1200, TOP + 7 * step + 34, random.Random())
     for theme in THEMES:
-        (OUT / f"contributions-{theme}.svg").write_text(render(calendar, theme), encoding="utf-8")
+        (OUT / f"contributions-{theme}.svg").write_text(render(calendar, theme, flight), encoding="utf-8")
     print(f"{calendar['totalContributions']} contributions, {len(calendar['weeks'])} semaines")
 
 
