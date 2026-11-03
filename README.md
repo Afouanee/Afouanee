@@ -45,12 +45,9 @@ Aussi : **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent su
   <img alt="Stack : IA et LLM (RAG, agents, LangGraph, MCP, pgvector, RAGAS), full stack (TypeScript, React, Next.js, Node.js, PostgreSQL), ops, tests et données (Python, pytest, Docker, CI/CD, Cloud Run, n8n)" src="assets/stack-light.svg" width="100%">
 </picture>
 
-<details>
-<summary><b>Certifications et langues</b></summary>
+## Certifications et langues
 
-<br>
-
-| | |
+| Certification | Détail |
 |---|---|
 | **Neo4j Certified Professional** | Neo4j, janvier 2026 |
 | **Neo4j Graph Data Science** | Neo4j, janvier 2026 |
@@ -59,23 +56,3 @@ Aussi : **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent su
 | **Certificat Voltaire** | français écrit |
 
 Français et tamoul : langues maternelles. Anglais : courant.
-
-</details>
-
-<details>
-<summary><b>English version</b></summary>
-
-<br>
-
-**Computer engineer, Full Stack & AI.** ESIEE Paris graduate (2026), based in Paris, available now and open to roles in France or abroad.
-
-I build products that put AI to work, not demos: an internal RAG assistant for a sales team (1,588 transcribed customer calls), an embeddable AI chatbot in production, an EdTech platform with 19 interactive modules. From design to deployment, I instrument what I ship and document it so others can pick it up.
-
-- **Shway** · business process automation for small companies, AI suggests and a person decides ([shway.fr](https://shway.fr))
-- **Radar** · LLM agent built to learn vector search, agent orchestration and LLM evaluation ([repo](https://github.com/Afouanee/radar))
-- **Café Crème, London** · full stack AI internship: RAG, sales co-pilot, chatbot, mobile app
-- **Gate** · collaborative family trees with React Flow and Stripe ([repo](https://github.com/Afouanee/Gate))
-
-Portfolio: [afouanee.dev](https://afouanee.dev) · LinkedIn: [afouane-mouhamad](https://www.linkedin.com/in/afouane-mouhamad)
-
-</details>

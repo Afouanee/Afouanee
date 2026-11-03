@@ -18,9 +18,11 @@ from pathlib import Path
 from fontTools import subset
 from fontTools.ttLib import TTFont
 from fontTools.varLib import instancer
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = Path(__file__).resolve().parent / "fonts"
+AVATAR = Path(__file__).resolve().parent / "avatar.png"  # favicon du portfolio
 OUT = ROOT / "assets"
 
 THEMES = {
@@ -28,13 +30,13 @@ THEMES = {
         bg="#FFFFFF", panel="#FAFAFA", card="#FFFFFF", border="#E5E5EA", text="#1D1D1F", muted="#6E6E73",
         faint="#AEAEB2", chip="#F2F2F4", chip_text="#3A3A3C", line="#D1D1D6", dot="#E5E5EA",
         mono_bg="#1D1D1F", mono_text="#F5F5F7", mono_muted="#8E8E93", mono_bar="#2C2C2E",
-        mark_bg="#1D1D1F", red="#E11D2A", ink="#1D1D1F",
+        tile="#F2F2F4", red="#E11D2A", ink="#1D1D1F",
     ),
     "dark": dict(
         bg="#0D1117", panel="#11161D", card="#161B22", border="#30363D", text="#F5F5F7", muted="#A1A1A6",
         faint="#6E6E73", chip="#21262D", chip_text="#E5E5EA", line="#30363D", dot="#21262D",
         mono_bg="#0B0E13", mono_text="#E5E5EA", mono_muted="#6E7681", mono_bar="#161B22",
-        mark_bg="#F5F5F7", red="#F0303C", ink="#F5F5F7",
+        tile="#F5F5F7", red="#ED4456", ink="#F5F5F7",
     ),
 }
 
@@ -142,6 +144,19 @@ def chip_row(svg: Svg, t: dict, x: float, y: float, labels: list[str], max_width
 
 
 # --------------------------------------------------------------------------- en-tête
+def avatar_data_uri(size: int = 288) -> str:
+    """Memoji recadré sur son contenu, posé en bas du carré pour qu'il dépasse de la vignette."""
+    source = Image.open(AVATAR).convert("RGBA")
+    subject = source.crop(source.getchannel("A").getbbox())
+    height = round(size * 0.9)
+    subject = subject.resize((round(subject.width * height / subject.height), height), Image.LANCZOS)
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    canvas.alpha_composite(subject, ((size - subject.width) // 2, size - height))
+    buf = io.BytesIO()
+    canvas.save(buf, "PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
 TERMINAL = [
     ("$ whoami", True),
     ("ingénieur ESIEE Paris, 2026", False),
@@ -164,25 +179,30 @@ def header(theme: str) -> str:
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="28" fill="{t["panel"]}" stroke="{t["border"]}" stroke-width="2"/>')
     s.raw(f'<g clip-path="url(#frame)"><rect width="{W}" height="{H}" fill="url(#g)" mask="url(#m)"/></g>')
 
-    # Monogramme : seules les lettres « Af » portent le rouge de la marque.
-    s.raw(f'<rect x="64" y="60" width="88" height="88" rx="24" fill="{t["mark_bg"]}"/>')
-    s.text(108, 119, "Af", POPPINS[700], 40, t["red"], anchor="middle", spacing=-1)
-    s.text(176, 98, "AFOUANEE", MONO, 15, t["muted"], spacing=3)
-    s.text(176, 124, "github.com/Afouanee", MONO, 15, t["faint"])
+    # Vignette claire dans les deux thèmes : la casquette noire du memoji resterait invisible sur fond sombre.
+    s.raw(
+        '<defs><clipPath id="tile"><rect x="64" y="52" width="104" height="104" rx="28"/></clipPath></defs>'
+        f'<rect x="64" y="52" width="104" height="104" rx="28" fill="{t["tile"]}"/>'
+        f'<image x="64" y="52" width="104" height="104" href="{avatar_data_uri()}" clip-path="url(#tile)"/>'
+    )
+    s.text(192, 98, "AFOUANEE", MONO, 15, t["muted"], spacing=3)
+    s.text(192, 124, "github.com/Afouanee", MONO, 15, t["faint"])
 
     # Terminal dimensionné sur sa plus longue ligne ; le nom s'adapte pour garder 48 px de marge.
     tw = MONO.width(max((line for line, _ in TERMINAL), key=len), 16) + 56
     tx, ty, th = W - 64 - tw, 60, 306
     name_size = min(66.0, 66.0 * (tx - 48 - 62) / POPPINS[700].width("Afouane Mouhamad", 66, -1.5))
-    s.text(62, 246, "Afouane Mouhamad", POPPINS[700], round(name_size, 1), t["text"], spacing=-1.5)
+    name_size = round(name_size, 1)
+    s.text(62, 246, "Afouane", POPPINS[700], name_size, t["text"], spacing=-1.5)
+    s.text(62 + POPPINS[700].width("Afouane ", name_size, -1.5) - 1.5, 246, "Mouhamad", POPPINS[700], name_size, t["red"], spacing=-1.5)
     s.text(64, 292, "Ingénieur informatique · Full Stack & IA", POPPINS[500], 27, t["muted"])
 
     status = "En recherche active · Paris · disponible immédiatement"
     pill_w = MONO.width(status, 15) + 64
     s.raw(f'<rect x="64" y="322" width="{pill_w:.1f}" height="44" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="1.5"/>')
     s.raw(
-        f'<circle cx="88" cy="344" r="5" fill="{t["ink"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
-        f'<circle cx="88" cy="344" r="5" fill="none" stroke="{t["ink"]}" stroke-width="1.5"><animate attributeName="r" values="5;11" dur="2s" repeatCount="indefinite"/>'
+        f'<circle cx="88" cy="344" r="5" fill="{t["red"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
+        f'<circle cx="88" cy="344" r="5" fill="none" stroke="{t["red"]}" stroke-width="1.5"><animate attributeName="r" values="5;11" dur="2s" repeatCount="indefinite"/>'
         f'<animate attributeName="opacity" values=".6;0" dur="2s" repeatCount="indefinite"/></circle>'
     )
     s.text(106, 349.5, status, MONO, 15, t["text"])
@@ -209,7 +229,7 @@ def header(theme: str) -> str:
         color = t["mono_text"] if is_cmd else t["mono_muted"]
         s.raw(f'<g clip-path="url(#l{i})">')
         if is_cmd:
-            s.text(tx + 24, y, "$", MONO, size, t["mono_muted"])
+            s.text(tx + 24, y, "$", MONO, size, t["red"])
             s.text(tx + 24 + char * 2, y, line[2:], MONO, size, color)
         else:
             s.text(tx + 24, y, line, MONO, size, color)
@@ -218,9 +238,9 @@ def header(theme: str) -> str:
     y = ty + 78 + len(TERMINAL) * 38
     s.raw("<defs>" + "".join(defs) + "</defs>")
     s.raw(f'<g opacity="0"><animate attributeName="opacity" values="0;1" begin="{begin:.2f}s" dur="0.01s" fill="freeze"/>')
-    s.text(tx + 24, y, "$", MONO, size, t["mono_muted"])
+    s.text(tx + 24, y, "$", MONO, size, t["red"])
     s.raw(
-        f'<rect x="{tx + 24 + char * 2:.1f}" y="{y - 15}" width="{char:.1f}" height="19" fill="{t["mono_text"]}">'
+        f'<rect x="{tx + 24 + char * 2:.1f}" y="{y - 15}" width="{char:.1f}" height="19" fill="{t["red"]}">'
         f'<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1.1s" repeatCount="indefinite"/></rect></g>'
     )
     return s.render()
@@ -263,12 +283,13 @@ def card(key: str, theme: str) -> str:
     lx = P
     if c.get("live"):
         s.raw(
-            f'<circle cx="{P + 5}" cy="45" r="5" fill="{t["ink"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
+            f'<circle cx="{P + 5}" cy="45" r="5" fill="{t["red"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
         )
         lx += 18
     s.text(lx, 50, c["label"], MONO, 13, t["muted"], spacing=1.5)
     s.text(W - P, 50, c["link"], MONO, 13, t["faint"], anchor="end")
-    s.text(P - 2, 104, c["title"], POPPINS[700], 38, t["text"], spacing=-0.8)
+    s.raw(f'<rect x="{P}" y="74" width="4" height="32" rx="2" fill="{t["red"]}"/>')
+    s.text(P + 14, 104, c["title"], POPPINS[700], 38, t["text"], spacing=-0.8)
     s.text(P, 138, c["subtitle"], POPPINS[500], 18, t["muted"])
     for i, line in enumerate(wrap(c["body"], POPPINS[400], 16.5, W - 2 * P)[:3]):
         s.text(P, 180 + i * 25, line, POPPINS[400], 16.5, t["text"])
@@ -300,8 +321,8 @@ def timeline(theme: str) -> str:
         last = i == len(TIMELINE) - 1
         s.text(x, y - 26, year, MONO, 14, t["muted"], anchor="middle", spacing=1)
         if last:
-            s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="none" stroke="{t["ink"]}" stroke-width="1.5" opacity=".35"/>')
-            s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["ink"]}"/>')
+            s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="none" stroke="{t["red"]}" stroke-width="1.5" opacity=".45"/>')
+            s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["red"]}"/>')
         else:
             s.raw(f'<circle cx="{x}" cy="{y}" r="7" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2"/>')
         s.text(x, y + 46, org, POPPINS[600], 18, t["text"], anchor="middle")
@@ -329,7 +350,8 @@ def stack(theme: str) -> str:
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
     for i, (title, chips) in enumerate(STACK):
         x = P + i * (col + gap)
-        s.text(x, 62, title, POPPINS[600], 19, t["text"])
+        s.raw(f'<rect x="{x:.1f}" y="48" width="4" height="18" rx="2" fill="{t["red"]}"/>')
+        s.text(x + 14, 63, title, POPPINS[600], 19, t["text"])
         chip_row(s, t, x, 84, chips, col, size=14, height=32)
     return s.render()
 
