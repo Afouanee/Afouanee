@@ -1,102 +1,66 @@
-<h1 align="center">Salut, moi c'est Afouane 👋</h1>
+<!-- Afouane MOUHAMAD · GitHub Profile README -->
 
-<p align="center">
-  Ingénieur informatique · Full Stack · IA
-  <br/>
-  ESIEE Paris (diplômé septembre 2026) 🎓 · 🚀 En recherche active d'un poste
-</p>
+<div align="center">
 
-<p align="center">
-  <a href="https://afouanee.dev"><img src="https://img.shields.io/badge/Portfolio-afouanee.dev-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white"/></a>
-  <a href="https://linkedin.com/in/afouane-mouhamad"><img src="https://img.shields.io/badge/LinkedIn-Afouane%20Mouhamad-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
-  <a href="mailto:afouanemouhamad@gmail.com"><img src="https://img.shields.io/badge/Email-Contact%20pro-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/></a>
-</p>
+## Afouane MOUHAMAD
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=22&pause=1200&color=0A66C2&center=true&vCenter=true&width=700&lines=Full+Stack+Engineer+%F0%9F%9A%80;IA+appliqu%C3%A9e+%7C+RAG+%7C+Agents+LLM+%F0%9F%A4%96;Build+products+from+idea+to+production+%E2%9A%A1" alt="Typing SVG" />
-</p>
+**Ingénieur informatique · Full Stack & IA**
+
+ESIEE Paris · Paris, France · [afouanee.dev](https://afouanee.dev) · [LinkedIn](https://linkedin.com/in/afouane-mouhamad)
+
+</div>
 
 ---
 
-## ✨ À propos
+### 🚀 En recherche active d'un poste
 
-- 🎓 ESIEE Paris · spécialisation **Informatique & Applications**, **Ingénierie 3D** et **Technologies des Médias** (promo 2026)
-- ☕ Stage **Ingénieur informatique, Full Stack & IA** chez Café Crème (terminé) : chatbot IA multi-tenant en production, assistant RAG interne, automatisation des briefs commerciaux
-- ⚡ Alternance chez Enedis (terminée) : MCO, outil Python d'automatisation, dashboard Power BI de supervision, échanges inter-SI
-- 🤖 Focus : IA appliquée (LLMs, RAG, agents), data et développement produit end-to-end
-- 🕹️ Intérêt : game dev, VR/XR et expériences immersives
-- 🌍 Ouvert à l'international (Inde, Émirats, Singapour, Malaisie, Angleterre, Arabie saoudite)
+Je conçois et déploie des systèmes IA en production (RAG, agents LLM, automatisation)
+et des produits web end-to-end. Diplômé ingénieur ESIEE Paris, promotion 2026.
+
+> Chatbot prod : ~1s de latence médiane · JDD Enedis : 30 min → 5 min · Sales Co-Pilot : 1 588 appels analysés
 
 ---
 
-## 🚀 Projets phares
+### 🛠 Stack
 
-### [Nooza](https://nooza.app)
-SaaS en ligne pour artisans : commandes Instagram, devis/acomptes, suivi automatisé.
-Conçu, développé et lancé en solo, de l'idée à la production.
-
-`Next.js 16 · React 19 · PostgreSQL · Stripe`
-
-### Radar
-Agent LLM de tri de candidatures : recherche vectorielle pgvector (HNSW), graphe LangGraph à trois nœuds, scoring justifié, évaluation sur 18 offres annotées + LLM-as-judge.
-Déployé sur Google Cloud Run avec CI/CD.
-
-`TypeScript · LangGraph.js · Mistral · PostgreSQL/Supabase`
-
-### Emotional AI
-Détection d'émotions sur vidéos d'entretien, restitution en temps réel via interface web (projet académique ESIEE).
-
-`Python · TensorFlow · OpenCV · FastAPI`
-
-👉 Plus de projets sur [afouanee.dev/projects](https://afouanee.dev/projects)
+| Domaine | Technologies |
+|---------|-------------|
+| Langages | TypeScript · Python · JavaScript · SQL |
+| Web | Next.js · React · Node.js · Tailwind |
+| IA / LLM | LangChain · LangGraph · RAG · pgvector · OpenAI · Mistral |
+| Mobile | React Native · Expo |
+| Infra | Docker · Terraform · GitHub Actions · Vercel · Supabase |
 
 ---
 
-## 🧰 Stack technique
+### 📌 Projets phares
 
-### Langages
-<p>
-  <img src="https://skillicons.dev/icons?i=ts,python,java,cpp,c,cs,bash" height="42"/>
-</p>
-
-### Web & Backend
-<p>
-  <img src="https://skillicons.dev/icons?i=react,nextjs,vuejs,nodejs,express,flask,php,postgres,mysql,firebase" height="42"/>
-</p>
-
-### IA / Data / LLM
-<p>
-  <img src="https://skillicons.dev/icons?i=tensorflow,sklearn,opencv,neo4j" height="42"/>
-</p>
-
-`RAG · Agents IA · LangChain / LangGraph · MCP · Agent SDK · pgvector · embeddings · LLM-as-judge · RAGAS · Fine-tuning (LoRA) · API Mistral/OpenAI · Make · n8n`
-
-### XR & Informatique graphique
-<p>
-  <img src="https://skillicons.dev/icons?i=unity" height="42"/>
-</p>
-
-`OpenGL · GLSL · Meta Quest (VR)`
-
-### Outils & environnements
-<p>
-  <img src="https://skillicons.dev/icons?i=linux,git,github,gitlab,docker,kubernetes,vscode,postman,jira,jenkins,githubactions,googlecloud" height="42"/>
-</p>
-
-`Power BI · Agile Scrum / SAFe`
+| Projet | Description | Stack |
+|--------|-------------|-------|
+| [Shway](https://shway.fr) ⚡ | Automatisation métier PME — IA propose, humain décide, tout tracé · **En cours** | Next.js · FastAPI · Mistral · n8n |
+| [Radar](https://github.com/Afouanee/radar) | Agent LLM de tri de candidatures — RAG vectoriel + LangGraph + LLM-as-judge | TypeScript · Mistral · pgvector |
+| [Gate](https://github.com/Afouanee/Gate) | Arbre généalogique intelligent — React Flow, auth, Stripe, PWA | Next.js · Prisma · TypeScript |
+| [Nooza](https://nooza.app) | SaaS artisans — commandes Instagram, devis, acompte *(arrêté oct. 2026)* | Next.js 16 · React 19 · PostgreSQL |
+| [Emotional AI](https://github.com/Afouanee/Projet-IA-pour-l-image-Challenge-IA-classification-d-images) | Détection d'émotions sur vidéos d'entretien en temps réel | Python · TensorFlow · OpenCV |
 
 ---
 
-## 📬 Contact
+### 💼 Parcours
 
-🚀 **Ouvert à de nouvelles opportunités en ingénierie logicielle Full Stack & IA**
-
-- **Email** : [afouanemouhamad@gmail.com](mailto:afouanemouhamad@gmail.com)
-- **LinkedIn** : [linkedin.com/in/afouane-mouhamad](https://linkedin.com/in/afouane-mouhamad)
-- **Portfolio** : [afouanee.dev](https://afouanee.dev)
+- **Stage · Café Crème (Londres, 2026)** — Chatbot IA Sara en prod, RAG interne, Sales Co-Pilot (1 588 appels), app Milo (19 modules)
+- **Apprenti SI · Enedis (2024–2026)** — Automatisation Python, dashboard Power BI, MCO, >500 fournisseurs
+- **Apprenti CPI · Realisium (2023–2024)** — Déploiement CréditXpert, VPS, HTTPS, MCO
+- **Technicien SSI · Siemens (2022–2023)**
+- **ESIEE Paris (2023–2026)** — Diplôme d'ingénieur, Informatique & Applications
+- **BUT GEII · IUT Créteil-Vitry (2021–2023)**
 
 ---
 
-<p align="center">
-  <i>Eat · Sleep · Train · Build · Repeat 🔁</i>
-</p>
+### 🏅 Certifications
+
+- Neo4j Certified Professional · Neo4j Graph Data Science · Using Neo4j with Python *(jan. 2026)*
+- TOEIC 855/990 (B2) · Certificat Voltaire
+
+---
+
+📬 afouanemouhamad@gmail.com · 🌍 Ouvert à l'international (Inde, Émirats, Singapour, Angleterre)
