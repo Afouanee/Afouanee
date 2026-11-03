@@ -160,9 +160,10 @@ def avatar_data_uri(size: int = 288) -> str:
 TERMINAL = [
     ("$ whoami", True),
     ("ingénieur ESIEE Paris, 2026", False),
-    ("$ ls ./ce-que-je-fais", True),
-    ("IA en production · RAG · agents", False),
-    ("full stack · automatisation", False),
+    ("$ cat focus.txt", True),
+    ("IA en production, full stack", False),
+    ("$ cat regle.txt", True),
+    ("mesurer avant d’affirmer", False),
 ]
 
 
@@ -185,27 +186,27 @@ def header(theme: str) -> str:
         f'<rect x="64" y="52" width="104" height="104" rx="28" fill="{t["tile"]}"/>'
         f'<image x="64" y="52" width="104" height="104" href="{avatar_data_uri()}" clip-path="url(#tile)"/>'
     )
-    s.text(192, 98, "AFOUANEE", MONO, 15, t["muted"], spacing=3)
-    s.text(192, 124, "github.com/Afouanee", MONO, 15, t["faint"])
+    s.text(192, 98, "PORTFOLIO", MONO, 16, t["muted"], spacing=3)
+    s.text(192, 126, "afouanee.dev", MONO, 18, t["text"])
 
     # Terminal dimensionné sur sa plus longue ligne ; le nom s'adapte pour garder 48 px de marge.
-    tw = MONO.width(max((line for line, _ in TERMINAL), key=len), 16) + 56
+    tw = MONO.width(max((line for line, _ in TERMINAL), key=len), 17) + 56
     tx, ty, th = W - 64 - tw, 60, 306
     name_size = min(66.0, 66.0 * (tx - 48 - 62) / POPPINS[700].width("Afouane Mouhamad", 66, -1.5))
     name_size = round(name_size, 1)
     s.text(62, 246, "Afouane", POPPINS[700], name_size, t["text"], spacing=-1.5)
     s.text(62 + POPPINS[700].width("Afouane ", name_size, -1.5) - 1.5, 246, "Mouhamad", POPPINS[700], name_size, t["red"], spacing=-1.5)
-    s.text(64, 292, "Ingénieur informatique · Full Stack & IA", POPPINS[500], 27, t["muted"])
+    s.text(64, 292, "Ingénieur informatique · Full Stack & IA", POPPINS[500], 29, t["muted"])
 
     status = "En recherche active · Paris · disponible immédiatement"
-    pill_w = MONO.width(status, 15) + 64
+    pill_w = MONO.width(status, 17) + 64
     s.raw(f'<rect x="64" y="322" width="{pill_w:.1f}" height="44" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="1.5"/>')
     s.raw(
         f'<circle cx="88" cy="344" r="5" fill="{t["red"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
         f'<circle cx="88" cy="344" r="5" fill="none" stroke="{t["red"]}" stroke-width="1.5"><animate attributeName="r" values="5;11" dur="2s" repeatCount="indefinite"/>'
         f'<animate attributeName="opacity" values=".6;0" dur="2s" repeatCount="indefinite"/></circle>'
     )
-    s.text(106, 349.5, status, MONO, 15, t["text"])
+    s.text(106, 350, status, MONO, 17, t["text"])
 
     # Terminal : les lignes s'écrivent l'une après l'autre (SMIL, compatible avec les images GitHub).
     s.raw(f'<rect x="{tx}" y="{ty}" width="{tw}" height="{th}" rx="18" fill="{t["mono_bg"]}" stroke="{t["border"]}" stroke-width="1.5"/>')
@@ -214,11 +215,11 @@ def header(theme: str) -> str:
         s.raw(f'<circle cx="{tx + 24 + i * 18}" cy="{ty + 20}" r="5.5" fill="{t["mono_muted"]}" opacity="{0.9 - i * 0.25:.2f}"/>')
     s.text(tx + tw / 2, ty + 25, "~/afouane", MONO, 12.5, t["mono_muted"], anchor="middle")
 
-    size, char = 16, MONO.width("a", 16)
+    size, char = 17, MONO.width("a", 17)
     begin = 0.4
     defs = []
     for i, (line, is_cmd) in enumerate(TERMINAL):
-        y = ty + 78 + i * 38
+        y = ty + 72 + i * 34
         n = len(line)
         widths = ";".join(f"{k * char + 2:.1f}" for k in range(n + 1))
         dur = n * (0.045 if is_cmd else 0.022)
@@ -235,7 +236,7 @@ def header(theme: str) -> str:
             s.text(tx + 24, y, line, MONO, size, color)
         s.raw("</g>")
         begin += dur + (0.35 if is_cmd else 0.15)
-    y = ty + 78 + len(TERMINAL) * 38
+    y = ty + 72 + len(TERMINAL) * 34
     s.raw("<defs>" + "".join(defs) + "</defs>")
     s.raw(f'<g opacity="0"><animate attributeName="opacity" values="0;1" begin="{begin:.2f}s" dur="0.01s" fill="freeze"/>')
     s.text(tx + 24, y, "$", MONO, size, t["red"])
@@ -249,68 +250,70 @@ def header(theme: str) -> str:
 # --------------------------------------------------------------------------- cartes projet
 CARDS = {
     "shway": dict(
-        label="EN COURS · 2026", link="shway.fr ↗", live=True, title="Shway",
+        label="EN COURS · 2026", link="shway.fr ↗", live=True, title="Shway", side="left",
         subtitle="Automatisation métier pour les PME",
-        body="Comprendre et simplifier un processus, puis automatiser seulement ce qui le mérite. L’IA propose, une personne décide, chaque action est tracée.",
+        body="Comprendre un processus, le simplifier, puis automatiser seulement ce qui le mérite. L’IA propose, une personne décide.",
         chips=["FastAPI", "Next.js 16", "PostgreSQL", "n8n", "Mistral"],
     ),
     "radar": dict(
-        label="PROJET D’APPRENTISSAGE · 2026", link="Afouanee/radar ↗", title="Radar",
+        label="APPRENTISSAGE · 2026", link="Afouanee/radar ↗", title="Radar", side="right",
         subtitle="Agent LLM construit pour monter en compétence",
-        body="Recherche vectorielle pgvector, agent LangGraph en trois étapes, scores justifiés critère par critère. Évalué par RAGAS et LLM-as-judge, déploiement bloqué si la qualité chute.",
+        body="Recherche vectorielle, agent LangGraph, scores justifiés critère par critère. Déploiement bloqué si l’évaluation chute.",
         chips=["TypeScript", "LangGraph", "MCP", "pgvector", "Cloud Run"],
     ),
     "cafe-creme": dict(
-        label="STAGE · LONDRES · 2026", link="afouanee.dev ↗", title="Café Crème",
-        subtitle="IA en production et plateformes full stack",
-        body="Assistant RAG sur 1 588 appels clients transcrits, copilote de vente, chatbot multi-sites en production, EdTech de 19 modules et application mobile.",
+        label="STAGE · LONDRES · 2026", link="afouanee.dev ↗", title="Café Crème", side="left",
+        subtitle="IA en production, plateformes full stack",
+        body="Assistant RAG sur 1 588 appels clients, copilote de vente, chatbot en production, EdTech de 19 modules, app mobile.",
         chips=["TypeScript", "Mistral", "RAG", "Next.js", "React Native"],
     ),
     "gate": dict(
-        label="PROJET PERSONNEL · 2026", link="Afouanee/Gate ↗", title="Gate",
+        label="PROJET PERSONNEL · 2026", link="Afouanee/Gate ↗", title="Gate", side="right",
         subtitle="Arbres généalogiques collaboratifs",
-        body="Graphe interactif React Flow, relations familiales complexes, rôles et abonnements Stripe, application bilingue et installable.",
+        body="Graphe interactif React Flow, relations familiales complexes, abonnements Stripe, application bilingue installable.",
         chips=["Next.js", "Prisma", "PostgreSQL", "Stripe", "React Flow"],
     ),
 }
 
 
 def card(key: str, theme: str) -> str:
+    """Deux cartes par ligne, collées sans espace dans le README : la gouttière est dessinée ici,
+    pour que leurs bords extérieurs s'alignent exactement sur ceux de l'en-tête."""
     t, c = THEMES[theme], CARDS[key]
-    W, H, P = 600, 330, 34
+    W, H, P, GUTTER, ROW_GAP = 600, 366, 32, 12, 16
+    left = GUTTER if c["side"] == "right" else 0
+    x0, inner = left + P, W - GUTTER - 2 * P
     s = Svg(W, H, f"{c['title']} : {c['subtitle']}")
-    s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
-    lx = P
+    s.raw(f'<rect x="{left + 1}" y="1" width="{W - GUTTER - 2}" height="{H - ROW_GAP - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
+    lx = x0
     if c.get("live"):
-        s.raw(
-            f'<circle cx="{P + 5}" cy="45" r="5" fill="{t["red"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>'
-        )
+        s.raw(f'<circle cx="{x0 + 5}" cy="44" r="5" fill="{t["red"]}"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle>')
         lx += 18
-    s.text(lx, 50, c["label"], MONO, 13, t["muted"], spacing=1.5)
-    s.text(W - P, 50, c["link"], MONO, 13, t["faint"], anchor="end")
-    s.raw(f'<rect x="{P}" y="74" width="4" height="32" rx="2" fill="{t["red"]}"/>')
-    s.text(P + 14, 104, c["title"], POPPINS[700], 38, t["text"], spacing=-0.8)
-    s.text(P, 138, c["subtitle"], POPPINS[500], 18, t["muted"])
-    for i, line in enumerate(wrap(c["body"], POPPINS[400], 16.5, W - 2 * P)[:3]):
-        s.text(P, 180 + i * 25, line, POPPINS[400], 16.5, t["text"])
-    chip_row(s, t, P, H - P - 28, c["chips"], W - 2 * P)
+    s.text(lx, 49, c["label"], MONO, 14, t["muted"], spacing=1.2)
+    s.text(x0 + inner, 49, c["link"], MONO, 14, t["muted"], anchor="end")
+    s.raw(f'<rect x="{x0}" y="74" width="4" height="34" rx="2" fill="{t["red"]}"/>')
+    s.text(x0 + 14, 105, c["title"], POPPINS[700], 40, t["text"], spacing=-0.8)
+    s.text(x0, 143, c["subtitle"], POPPINS[500], 20, t["muted"])
+    for i, line in enumerate(wrap(c["body"], POPPINS[400], 19, inner)[:3]):
+        s.text(x0, 186 + i * 28, line, POPPINS[400], 19, t["text"])
+    chip_row(s, t, x0, H - ROW_GAP - P - 30, c["chips"], inner, size=14.5, height=30)
     return s.render()
 
 
 # --------------------------------------------------------------------------- parcours
 TIMELINE = [
-    ("2021", "IUT Créteil-Vitry", "BUT Génie électrique et informatique industrielle"),
-    ("2022", "Siemens", "Technicien systèmes de sécurité incendie, alternance"),
-    ("2023", "Realisium", "Assistant chef de projet informatique, alternance"),
-    ("2024", "Enedis", "Appui au pilotage SI, alternance de deux ans"),
-    ("2026", "Café Crème", "Développeur Full Stack IA, stage à Londres"),
-    ("2026", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
+    ("2021", "IUT Créteil", "BUT GEII"),
+    ("2022", "Siemens", "Technicien SSI, alternance"),
+    ("2023", "Realisium", "Chef de projet IT, alternance"),
+    ("2024", "Enedis", "Pilotage SI, alternance"),
+    ("2026", "Café Crème", "Full Stack & IA, stage à Londres"),
+    ("2026", "ESIEE Paris", "Diplôme d’ingénieur"),
 ]
 
 
 def timeline(theme: str) -> str:
     t = THEMES[theme]
-    W, H = 1200, 250
+    W, H = 1200, 262
     s = Svg(W, H, "Parcours : BUT GEII, Siemens, Realisium, Enedis, Café Crème, diplôme d'ingénieur ESIEE Paris")
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
     step = (W - 200) / (len(TIMELINE) - 1)
@@ -319,47 +322,62 @@ def timeline(theme: str) -> str:
     for i, (year, org, role) in enumerate(TIMELINE):
         x = 100 + i * step
         last = i == len(TIMELINE) - 1
-        s.text(x, y - 26, year, MONO, 14, t["muted"], anchor="middle", spacing=1)
+        s.text(x, y - 26, year, MONO, 17, t["muted"], anchor="middle", spacing=1)
         if last:
             s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="none" stroke="{t["red"]}" stroke-width="1.5" opacity=".45"/>')
             s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["red"]}"/>')
         else:
             s.raw(f'<circle cx="{x}" cy="{y}" r="7" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2"/>')
-        s.text(x, y + 46, org, POPPINS[600], 18, t["text"], anchor="middle")
-        for j, line in enumerate(wrap(role, POPPINS[400], 14.5, step - 26)[:3]):
-            s.text(x, y + 72 + j * 21, line, POPPINS[400], 14.5, t["muted"], anchor="middle")
+        s.text(x, y + 50, org, POPPINS[600], 22, t["text"], anchor="middle")
+        for j, line in enumerate(wrap(role, POPPINS[400], 18, step - 22)[:3]):
+            s.text(x, y + 82 + j * 25, line, POPPINS[400], 18, t["muted"], anchor="middle")
     return s.render()
 
 
 # --------------------------------------------------------------------------- stack
 STACK = [
-    ("IA & LLM", ["LLM", "RAG", "agents IA", "LangGraph", "MCP", "pgvector", "embeddings", "RAGAS", "LLM-as-judge", "LoRA", "Mistral", "OpenAI"]),
-    ("Full stack", ["TypeScript", "React", "Next.js", "Node.js", "React Native", "PostgreSQL", "Prisma", "TypeORM", "Clean Archi", "CQRS", "Nx"]),
-    ("Ops, tests & données", ["Python", "pytest", "Docker", "CI/CD", "GitHub Actions", "GitLab CI", "Cloud Run", "n8n", "SQL", "Neo4j", "Power BI"]),
+    ("IA & LLM", ["RAG", "Agents", "LangGraph", "MCP", "pgvector", "RAGAS", "LLM-as-judge", "Mistral"], 1),
+    ("Full stack", ["TypeScript", "React", "Next.js", "Node.js", "React Native", "PostgreSQL", "Prisma"], 1),
+    ("Ops & données", ["Python", "pytest", "Docker", "CI/CD", "Cloud Run", "n8n", "Neo4j"], 1),
+]
+CERTIFICATIONS = [
+    ("Certifications", ["Neo4j Certified Professional", "Neo4j Graph Data Science", "Using Neo4j with Python", "TOEIC 855/990", "Certificat Voltaire"], 2),
+    ("Langues", ["Français", "Tamoul", "Anglais B2"], 1),
 ]
 
 
-def stack(theme: str) -> str:
+def chip_panel(theme: str, columns: list, title: str) -> str:
+    """Panneau de pastilles en colonnes ; le dernier nombre de chaque colonne est sa largeur relative."""
     t = THEMES[theme]
-    W, P, gap = 1200, 36, 32
-    col = (W - 2 * P - 2 * gap) / 3
+    W, P, gap, size, height = 1200, 36, 32, 17, 38
+    unit = (W - 2 * P - (len(columns) - 1) * gap) / sum(c[2] for c in columns)
+    widths = [unit * c[2] for c in columns]
     probe = Svg(W, 10, "")
-    bottom = max(chip_row(probe, t, 0, 0, chips, col, size=14, height=32) for _, chips in STACK)
-    H = int(84 + bottom + P)
-    s = Svg(W, H, "Stack : IA et LLM, full stack TypeScript, ops, tests et données")
+    bottom = max(chip_row(probe, t, 0, 0, c[1], w, size=size, height=height, gap=10) for c, w in zip(columns, widths))
+    H = int(86 + bottom + P)
+    s = Svg(W, H, title)
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
-    for i, (title, chips) in enumerate(STACK):
-        x = P + i * (col + gap)
-        s.raw(f'<rect x="{x:.1f}" y="48" width="4" height="18" rx="2" fill="{t["red"]}"/>')
-        s.text(x + 14, 63, title, POPPINS[600], 19, t["text"])
-        chip_row(s, t, x, 84, chips, col, size=14, height=32)
+    x = P
+    for (name, chips, _), w in zip(columns, widths):
+        s.raw(f'<rect x="{x:.1f}" y="44" width="4" height="22" rx="2" fill="{t["red"]}"/>')
+        s.text(x + 14, 63, name, POPPINS[600], 23, t["text"])
+        chip_row(s, t, x, 86, chips, w, size=size, height=height, gap=10)
+        x += w + gap
     return s.render()
+
+
+def stack(theme: str) -> str:
+    return chip_panel(theme, STACK, "Stack : IA et LLM, full stack TypeScript, ops et données")
+
+
+def certifications(theme: str) -> str:
+    return chip_panel(theme, CERTIFICATIONS, "Certifications Neo4j, TOEIC 855/990, certificat Voltaire. Langues : français, tamoul, anglais B2")
 
 
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     for theme in THEMES:
-        files = {f"header-{theme}.svg": header(theme), f"timeline-{theme}.svg": timeline(theme), f"stack-{theme}.svg": stack(theme)}
+        files = {f"header-{theme}.svg": header(theme), f"timeline-{theme}.svg": timeline(theme), f"stack-{theme}.svg": stack(theme), f"certifications-{theme}.svg": certifications(theme)}
         files.update({f"card-{key}-{theme}.svg": card(key, theme) for key in CARDS})
         for name, content in files.items():
             (OUT / name).write_text(content, encoding="utf-8")

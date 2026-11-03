@@ -9,27 +9,18 @@
   <a href="https://www.linkedin.com/in/afouane-mouhamad"><b>LinkedIn</b></a>
   &nbsp;·&nbsp;
   <a href="https://afouanee.dev/#contact"><b>Me contacter</b></a>
-  &nbsp;·&nbsp;
-  <a href="https://shway.fr"><b>Shway</b></a>
 </p>
 
-Je construis des produits qui mettent l'IA au travail, pas des démos : un assistant RAG pour une équipe commerciale, un chatbot embarqué sur un site public, un SaaS de commandes en ligne. De la conception au déploiement, sans passer la main à mi-chemin. J'instrumente ce que je mets en ligne pour savoir si ça sert vraiment, et je documente assez pour qu'on puisse reprendre derrière moi.
+Je construis des produits qui mettent l'IA au travail, pas des démos. Je les conçois, je les déploie, puis je mesure s'ils servent vraiment. Diplômé ingénieur de l'ESIEE Paris en 2026, après un parcours en alternance et un stage à Londres.
 
-**En ce moment**
-
-- Je cherche un poste d'**ingénieur Full Stack & IA**, en France ou à l'international, sur des sujets d'IA proches du produit.
-- Je lance **[Shway](https://shway.fr)** : aider les PME à reprendre un processus qui leur fait perdre du temps, d'abord en le simplifiant, puis en automatisant ce qui le mérite.
+- **Je cherche** un poste d'ingénieur Full Stack & IA, en France ou à l'international.
+- **Je lance [Shway](https://shway.fr)** : j'aide les PME à simplifier un processus qui leur fait perdre du temps, puis à automatiser ce qui le mérite.
 
 ## Projets
 
-<p>
-  <a href="https://shway.fr"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-shway-dark.svg"><img alt="Shway : automatisation métier pour les PME" src="assets/card-shway-light.svg" width="49%"></picture></a>
-  <a href="https://github.com/Afouanee/radar"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-radar-dark.svg"><img alt="Radar : agent LLM construit pour monter en compétence" src="assets/card-radar-light.svg" width="49%"></picture></a>
-  <a href="https://afouanee.dev/projects/internal-rag-sales-assistant"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-cafe-creme-dark.svg"><img alt="Café Crème : IA en production et plateformes full stack, stage à Londres" src="assets/card-cafe-creme-light.svg" width="49%"></picture></a>
-  <a href="https://github.com/Afouanee/Gate"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-gate-dark.svg"><img alt="Gate : arbres généalogiques collaboratifs" src="assets/card-gate-light.svg" width="49%"></picture></a>
-</p>
+<p><a href="https://shway.fr"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-shway-dark.svg"><img alt="Shway : automatisation métier pour les PME" src="assets/card-shway-light.svg" width="49.95%"></picture></a><a href="https://github.com/Afouanee/radar"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-radar-dark.svg"><img alt="Radar : agent LLM construit pour monter en compétence" src="assets/card-radar-light.svg" width="49.95%"></picture></a><a href="https://afouanee.dev/projects/internal-rag-sales-assistant"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-cafe-creme-dark.svg"><img alt="Café Crème : IA en production et plateformes full stack, stage à Londres" src="assets/card-cafe-creme-light.svg" width="49.95%"></picture></a><a href="https://github.com/Afouanee/Gate"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-gate-dark.svg"><img alt="Gate : arbres généalogiques collaboratifs" src="assets/card-gate-light.svg" width="49.95%"></picture></a></p>
 
-Aussi : **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent sur Instagram, conçu, développé et mis en ligne seul (arrêté en octobre 2026), et **[Milo](https://afouanee.dev/projects/milo-ai-literacy-kids)**, une école de l'IA pour les 6-16 ans. Tous les projets sont sur **[afouanee.dev](https://afouanee.dev/#projects)**.
+Mais aussi **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent sur Instagram, conçu et mis en ligne seul (arrêté en octobre 2026), et **[Milo](https://afouanee.dev/projects/milo-ai-literacy-kids)**, une école de l'IA pour les 6-16 ans. Tous mes projets sont sur **[afouanee.dev](https://afouanee.dev/#projects)**.
 
 ## Parcours
 
@@ -42,17 +33,19 @@ Aussi : **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent su
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img alt="Stack : IA et LLM (RAG, agents, LangGraph, MCP, pgvector, RAGAS), full stack (TypeScript, React, Next.js, Node.js, PostgreSQL), ops, tests et données (Python, pytest, Docker, CI/CD, Cloud Run, n8n)" src="assets/stack-light.svg" width="100%">
+  <img alt="Stack : IA et LLM (RAG, agents, LangGraph, MCP, pgvector, RAGAS), full stack (TypeScript, React, Next.js, Node.js, PostgreSQL), ops et données (Python, pytest, Docker, CI/CD, Cloud Run, n8n)" src="assets/stack-light.svg" width="100%">
+</picture>
+
+## Activité
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions-dark.svg">
+  <img alt="Carte de mes contributions GitHub sur un an, survolée par un avion qui passe par mes jours les plus actifs" src="assets/contributions-light.svg" width="100%">
 </picture>
 
 ## Certifications et langues
 
-| Certification | Détail |
-|---|---|
-| **Neo4j Certified Professional** | Neo4j, janvier 2026 |
-| **Neo4j Graph Data Science** | Neo4j, janvier 2026 |
-| **Using Neo4j with Python** | Neo4j, janvier 2026 |
-| **TOEIC 855/990** | anglais professionnel (B2) |
-| **Certificat Voltaire** | français écrit |
-
-Français et tamoul : langues maternelles. Anglais : courant.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/certifications-dark.svg">
+  <img alt="Certifications : Neo4j Certified Professional, Neo4j Graph Data Science, Using Neo4j with Python, TOEIC 855/990, certificat Voltaire. Langues : français, tamoul, anglais B2" src="assets/certifications-light.svg" width="100%">
+</picture>
