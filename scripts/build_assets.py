@@ -301,13 +301,14 @@ def card(key: str, theme: str) -> str:
 
 
 # --------------------------------------------------------------------------- parcours
+# Ordre strictement chronologique (date de début), études et expériences mêlées.
 TIMELINE = [
-    ("upec", "sept. 2021 → sept. 2023", "IUT Créteil-Vitry", "BUT GEII, systèmes embarqués"),
-    ("siemens", "sept. 2022 → août 2023", "Siemens", "Technicien systèmes incendie, alternance"),
-    ("realisium", "sept. 2023 → août 2024", "Realisium", "Assistant chef de projet IT, alternance"),
-    ("enedis", "sept. 2024 → sept. 2026", "Enedis", "Appui au pilotage SI, alternance"),
-    ("cafecreme", "mai 2026 → juil. 2026", "Café Crème", "Full Stack & IA, stage à Londres"),
-    ("esiee", "sept. 2023 → sept. 2026", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
+    ("upec", "sept. 2021 → sept. 2023 · école", "IUT Créteil-Vitry", "BUT GEII, systèmes embarqués"),
+    ("siemens", "sept. 2022 → août 2023 · pro", "Siemens", "Technicien systèmes incendie, alternance"),
+    ("realisium", "sept. 2023 → août 2024 · pro", "Realisium", "Assistant chef de projet IT, alternance"),
+    ("esiee", "sept. 2023 → sept. 2026 · école", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
+    ("enedis", "sept. 2024 → sept. 2026 · pro", "Enedis", "Appui au pilotage SI, alternance"),
+    ("cafecreme", "mai 2026 → juil. 2026 · pro", "Café Crème", "Full Stack & IA, stage à Londres"),
 ]
 
 
@@ -347,7 +348,7 @@ def timeline(theme: str) -> str:
         r, pos = divmod(i, PER_ROW)
         x = columns[pos if r % 2 == 0 else PER_ROW - 1 - pos]
         y = TOP_Y + r * ROW
-        if i == len(TIMELINE) - 1:
+        if logo == "esiee":  # le diplôme reste marqué, à sa place dans la chronologie
             s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="{t["card"]}" stroke="{t["red"]}" stroke-width="1.5" opacity=".6"/><circle cx="{x}" cy="{y}" r="8" fill="{t["red"]}"/>')
         else:
             s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2.5"/>')

@@ -26,7 +26,7 @@ Mais aussi **[Nooza](https://nooza.app)**, un SaaS pour les artisans qui vendent
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/timeline-dark.svg">
-  <img alt="Parcours : BUT GEII à l'IUT de Créteil-Vitry (2021 à 2023), Siemens (2022 à 2023), Realisium (2023 à 2024), Enedis (2024 à 2026), stage Café Crème à Londres (2026), diplôme d'ingénieur ESIEE Paris (2023 à 2026)" src="assets/timeline-light.svg" width="100%">
+  <img alt="Parcours : BUT GEII à l'IUT de Créteil-Vitry (2021 à 2023), Siemens (2022 à 2023), Realisium (2023 à 2024), ESIEE Paris (2023 à 2026, diplôme d'ingénieur), Enedis (2024 à 2026), stage Café Crème à Londres (2026)" src="assets/timeline-light.svg" width="100%">
 </picture>
 
 ## Stack
