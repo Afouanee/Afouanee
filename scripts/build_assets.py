@@ -2,7 +2,7 @@
 
     python scripts/build_assets.py
 
-Les polices (Poppins, JetBrains Mono, licence OFL) sont réduites aux seuls caractères
+Les polices du portfolio (Plus Jakarta Sans, JetBrains Mono, licence OFL) sont réduites aux seuls caractères
 utilisés puis intégrées dans chaque SVG : le rendu est identique sur toutes les machines,
 sans dépendre d'un service externe. Les textes sont mesurés avec les métriques réelles
 des polices pour les retours à la ligne.
@@ -65,7 +65,7 @@ class Font:
         return total * size / upm + spacing * max(0, len(text) - 1)
 
 
-POPPINS = {w: Font("Poppins", w, FONTS / f"Poppins-{n}.ttf") for w, n in [(400, "Regular"), (500, "Medium"), (600, "SemiBold"), (700, "Bold")]}
+SANS = {w: Font("Plus Jakarta Sans", w, FONTS / "PlusJakartaSans.ttf", variable_wght=w) for w in (400, 500, 600, 700)}
 MONO = Font("JetBrains Mono", 500, FONTS / "JetBrainsMono.ttf", variable_wght=500)
 
 
@@ -192,11 +192,11 @@ def header(theme: str) -> str:
     # Terminal dimensionné sur sa plus longue ligne ; le nom s'adapte pour garder 48 px de marge.
     tw = MONO.width(max((line for line, _ in TERMINAL), key=len), 17) + 56
     tx, ty, th = W - 64 - tw, 60, 306
-    name_size = min(66.0, 66.0 * (tx - 48 - 62) / POPPINS[700].width("Afouane Mouhamad", 66, -1.5))
+    name_size = min(66.0, 66.0 * (tx - 48 - 62) / SANS[700].width("Afouane Mouhamad", 66, -1.5))
     name_size = round(name_size, 1)
-    s.text(62, 246, "Afouane", POPPINS[700], name_size, t["text"], spacing=-1.5)
-    s.text(62 + POPPINS[700].width("Afouane ", name_size, -1.5) - 1.5, 246, "Mouhamad", POPPINS[700], name_size, t["red"], spacing=-1.5)
-    s.text(64, 292, "Ingénieur informatique · Full Stack & IA", POPPINS[500], 29, t["muted"])
+    s.text(62, 246, "Afouane", SANS[700], name_size, t["text"], spacing=-1.5)
+    s.text(62 + SANS[700].width("Afouane ", name_size, -1.5) - 1.5, 246, "Mouhamad", SANS[700], name_size, t["red"], spacing=-1.5)
+    s.text(64, 292, "Ingénieur informatique · Full Stack & IA", SANS[500], 29, t["muted"])
 
     status = "En recherche active · Paris · disponible immédiatement"
     pill_w = MONO.width(status, 17) + 64
@@ -292,45 +292,58 @@ def card(key: str, theme: str) -> str:
     s.text(lx, 49, c["label"], MONO, 14, t["muted"], spacing=1.2)
     s.text(x0 + inner, 49, c["link"], MONO, 14, t["muted"], anchor="end")
     s.raw(f'<rect x="{x0}" y="74" width="4" height="34" rx="2" fill="{t["red"]}"/>')
-    s.text(x0 + 14, 105, c["title"], POPPINS[700], 40, t["text"], spacing=-0.8)
-    s.text(x0, 143, c["subtitle"], POPPINS[500], 20, t["muted"])
-    for i, line in enumerate(wrap(c["body"], POPPINS[400], 19, inner)[:3]):
-        s.text(x0, 186 + i * 28, line, POPPINS[400], 19, t["text"])
+    s.text(x0 + 14, 105, c["title"], SANS[700], 40, t["text"], spacing=-0.8)
+    s.text(x0, 143, c["subtitle"], SANS[500], 20, t["muted"])
+    for i, line in enumerate(wrap(c["body"], SANS[400], 19, inner)[:3]):
+        s.text(x0, 186 + i * 28, line, SANS[400], 19, t["text"])
     chip_row(s, t, x0, H - ROW_GAP - P - 30, c["chips"], inner, size=14.5, height=30)
     return s.render()
 
 
 # --------------------------------------------------------------------------- parcours
 TIMELINE = [
-    ("2021", "IUT Créteil", "BUT GEII"),
-    ("2022", "Siemens", "Technicien SSI, alternance"),
-    ("2023", "Realisium", "Chef de projet IT, alternance"),
-    ("2024", "Enedis", "Pilotage SI, alternance"),
-    ("2026", "Café Crème", "Full Stack & IA, stage à Londres"),
-    ("2026", "ESIEE Paris", "Diplôme d’ingénieur"),
+    ("upec", "2021 · 2023", "IUT Créteil-Vitry", "BUT GEII, systèmes embarqués"),
+    ("siemens", "2022 · 2023", "Siemens", "Technicien systèmes incendie, alternance"),
+    ("realisium", "2023 · 2024", "Realisium", "Assistant chef de projet IT, alternance"),
+    ("enedis", "2024 · 2026", "Enedis", "Appui au pilotage SI, alternance"),
+    ("cafecreme", "2026", "Café Crème", "Full Stack & IA, stage à Londres"),
+    ("esiee", "2023 · 2026", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
 ]
 
 
+def logo_uri(name: str) -> str:
+    data = (Path(__file__).resolve().parent / "logos" / f"{name}.svg").read_bytes()
+    return "data:image/svg+xml;base64," + base64.b64encode(data).decode()
+
+
 def timeline(theme: str) -> str:
+    """Deux colonnes chronologiques. Plaque blanche dans les deux thèmes : les logos sont conçus pour fond clair."""
     t = THEMES[theme]
-    W, H = 1200, 262
+    W, P, ROW, ROWS = 1200, 40, 104, 3
+    H = 2 * P + ROWS * ROW - 16
+    col = (W - 2 * P) / 2
+    plate_w, plate_h = 164, 72
     s = Svg(W, H, "Parcours : BUT GEII, Siemens, Realisium, Enedis, Café Crème, diplôme d'ingénieur ESIEE Paris")
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
-    step = (W - 200) / (len(TIMELINE) - 1)
-    y = 92
-    s.raw(f'<line x1="100" y1="{y}" x2="{W - 100}" y2="{y}" stroke="{t["line"]}" stroke-width="2"/>')
-    for i, (year, org, role) in enumerate(TIMELINE):
-        x = 100 + i * step
-        last = i == len(TIMELINE) - 1
-        s.text(x, y - 26, year, MONO, 17, t["muted"], anchor="middle", spacing=1)
-        if last:
-            s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="none" stroke="{t["red"]}" stroke-width="1.5" opacity=".45"/>')
-            s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["red"]}"/>')
+    for c in range(2):
+        x = P + 8 + c * col
+        top, bottom = P + plate_h / 2, P + (ROWS - 1) * ROW + plate_h / 2
+        s.raw(f'<line x1="{x}" y1="{top}" x2="{x}" y2="{bottom}" stroke="{t["line"]}" stroke-width="2"/>')
+    for i, (logo, years, org, role) in enumerate(TIMELINE):
+        c, r = divmod(i, ROWS)
+        rail, y = P + 8 + c * col, P + r * ROW
+        cy = y + plate_h / 2
+        if i == len(TIMELINE) - 1:
+            s.raw(f'<circle cx="{rail}" cy="{cy}" r="12" fill="{t["card"]}" stroke="{t["red"]}" stroke-width="1.5" opacity=".6"/><circle cx="{rail}" cy="{cy}" r="7" fill="{t["red"]}"/>')
         else:
-            s.raw(f'<circle cx="{x}" cy="{y}" r="7" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2"/>')
-        s.text(x, y + 50, org, POPPINS[600], 22, t["text"], anchor="middle")
-        for j, line in enumerate(wrap(role, POPPINS[400], 18, step - 22)[:3]):
-            s.text(x, y + 82 + j * 25, line, POPPINS[400], 18, t["muted"], anchor="middle")
+            s.raw(f'<circle cx="{rail}" cy="{cy}" r="7" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2"/>')
+        px = rail + 30
+        s.raw(f'<rect x="{px}" y="{y}" width="{plate_w}" height="{plate_h}" rx="14" fill="#FFFFFF" stroke="{t["border"]}" stroke-width="1.5"/>')
+        s.raw(f'<image x="{px + 16}" y="{y + 12}" width="{plate_w - 32}" height="{plate_h - 24}" href="{logo_uri(logo)}"/>')
+        tx = px + plate_w + 20
+        s.text(tx, y + 17, years, MONO, 15, t["muted"], spacing=0.5)
+        s.text(tx, y + 44, org, SANS[700], 22, t["text"])
+        s.text(tx, y + 69, role, SANS[500], 15.5, t["muted"])
     return s.render()
 
 
@@ -360,7 +373,7 @@ def chip_panel(theme: str, columns: list, title: str) -> str:
     x = P
     for (name, chips, _), w in zip(columns, widths):
         s.raw(f'<rect x="{x:.1f}" y="44" width="4" height="22" rx="2" fill="{t["red"]}"/>')
-        s.text(x + 14, 63, name, POPPINS[600], 23, t["text"])
+        s.text(x + 14, 63, name, SANS[600], 23, t["text"])
         chip_row(s, t, x, 86, chips, w, size=size, height=height, gap=10)
         x += w + gap
     return s.render()

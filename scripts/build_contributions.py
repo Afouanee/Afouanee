@@ -19,7 +19,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_assets import MONO, OUT, POPPINS, THEMES, Svg  # noqa: E402
+from build_assets import MONO, OUT, SANS, THEMES, Svg  # noqa: E402
 
 LOGIN = "Afouanee"
 QUERY = """query($login: String!) { user(login: $login) { contributionsCollection { contributionCalendar {
@@ -151,8 +151,8 @@ def render(calendar: dict, theme: str, flight: dict) -> str:
 
     label = f"{total:,}".replace(",", " ")
     s.raw(f'<rect x="{LEFT}" y="34" width="4" height="26" rx="2" fill="{t["red"]}"/>')
-    s.text(LEFT + 14, 57, label, POPPINS[700], 28, t["text"], spacing=-0.4)
-    s.text(LEFT + 24 + POPPINS[700].width(label, 28), 57, "contributions sur un an", POPPINS[500], 21, t["muted"])
+    s.text(LEFT + 14, 57, label, SANS[700], 28, t["text"], spacing=-0.4)
+    s.text(LEFT + 24 + SANS[700].width(label, 28), 57, "contributions sur un an", SANS[500], 21, t["muted"])
 
     # Mois : libellé sur la première semaine du mois, sauf s'il touche le précédent.
     last_x = -100.0
