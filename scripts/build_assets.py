@@ -302,12 +302,12 @@ def card(key: str, theme: str) -> str:
 
 # --------------------------------------------------------------------------- parcours
 TIMELINE = [
-    ("upec", "2021 · 2023", "IUT Créteil-Vitry", "BUT GEII, systèmes embarqués"),
-    ("siemens", "2022 · 2023", "Siemens", "Technicien systèmes incendie, alternance"),
-    ("realisium", "2023 · 2024", "Realisium", "Assistant chef de projet IT, alternance"),
-    ("enedis", "2024 · 2026", "Enedis", "Appui au pilotage SI, alternance"),
-    ("cafecreme", "2026", "Café Crème", "Full Stack & IA, stage à Londres"),
-    ("esiee", "2023 · 2026", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
+    ("upec", "sept. 2021 → sept. 2023", "IUT Créteil-Vitry", "BUT GEII, systèmes embarqués"),
+    ("siemens", "sept. 2022 → août 2023", "Siemens", "Technicien systèmes incendie, alternance"),
+    ("realisium", "sept. 2023 → août 2024", "Realisium", "Assistant chef de projet IT, alternance"),
+    ("enedis", "sept. 2024 → sept. 2026", "Enedis", "Appui au pilotage SI, alternance"),
+    ("cafecreme", "mai 2026 → juil. 2026", "Café Crème", "Full Stack & IA, stage à Londres"),
+    ("esiee", "sept. 2023 → sept. 2026", "ESIEE Paris", "Diplôme d’ingénieur informatique"),
 ]
 
 
@@ -317,33 +317,47 @@ def logo_uri(name: str) -> str:
 
 
 def timeline(theme: str) -> str:
-    """Deux colonnes chronologiques. Plaque blanche dans les deux thèmes : les logos sont conçus pour fond clair."""
+    """Une seule ligne continue qui serpente : gauche vers droite, demi-tour, droite vers gauche, demi-tour, etc.
+    Plaque blanche dans les deux thèmes : les logos sont conçus pour fond clair."""
     t = THEMES[theme]
-    W, P, ROW, ROWS = 1200, 40, 104, 3
-    H = 2 * P + ROWS * ROW - 16
-    col = (W - 2 * P) / 2
-    plate_w, plate_h = 164, 72
+    W, TOP_Y, ROW, PER_ROW = 1200, 44, 128, 2
+    left, right = 92.0, 1108.0
+    columns = [left, 640.0]
+    plate_w, plate_h = 150, 66
+    rows = len(TIMELINE) // PER_ROW
+    H = int(TOP_Y + (rows - 1) * ROW + 22 + plate_h + 34)
     s = Svg(W, H, "Parcours : BUT GEII, Siemens, Realisium, Enedis, Café Crème, diplôme d'ingénieur ESIEE Paris")
     s.raw(f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="22" fill="{t["card"]}" stroke="{t["border"]}" stroke-width="2"/>')
-    for c in range(2):
-        x = P + 8 + c * col
-        top, bottom = P + plate_h / 2, P + (ROWS - 1) * ROW + plate_h / 2
-        s.raw(f'<line x1="{x}" y1="{top}" x2="{x}" y2="{bottom}" stroke="{t["line"]}" stroke-width="2"/>')
-    for i, (logo, years, org, role) in enumerate(TIMELINE):
-        c, r = divmod(i, ROWS)
-        rail, y = P + 8 + c * col, P + r * ROW
-        cy = y + plate_h / 2
-        if i == len(TIMELINE) - 1:
-            s.raw(f'<circle cx="{rail}" cy="{cy}" r="12" fill="{t["card"]}" stroke="{t["red"]}" stroke-width="1.5" opacity=".6"/><circle cx="{rail}" cy="{cy}" r="7" fill="{t["red"]}"/>')
+
+    radius = ROW / 2
+    d = f"M{left} {TOP_Y}"
+    for r in range(rows):
+        y = TOP_Y + r * ROW
+        if r == rows - 1:
+            # Dernière ligne : on s'arrête sur la dernière étape.
+            end = columns[-1] if r % 2 == 0 else columns[0]
+            d += f"H{end}"
+        elif r % 2 == 0:
+            d += f"H{right}A{radius} {radius} 0 0 1 {right} {y + ROW}"
         else:
-            s.raw(f'<circle cx="{rail}" cy="{cy}" r="7" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2"/>')
-        px = rail + 30
-        s.raw(f'<rect x="{px}" y="{y}" width="{plate_w}" height="{plate_h}" rx="14" fill="#FFFFFF" stroke="{t["border"]}" stroke-width="1.5"/>')
-        s.raw(f'<image x="{px + 16}" y="{y + 12}" width="{plate_w - 32}" height="{plate_h - 24}" href="{logo_uri(logo)}"/>')
-        tx = px + plate_w + 20
-        s.text(tx, y + 17, years, MONO, 15, t["muted"], spacing=0.5)
-        s.text(tx, y + 44, org, SANS[700], 22, t["text"])
-        s.text(tx, y + 69, role, SANS[500], 15.5, t["muted"])
+            d += f"H{left}A{radius} {radius} 0 0 0 {left} {y + ROW}"
+    s.raw(f'<path d="{d}" fill="none" stroke="{t["line"]}" stroke-width="3" stroke-linecap="round"/>')
+
+    for i, (logo, dates, org, role) in enumerate(TIMELINE):
+        r, pos = divmod(i, PER_ROW)
+        x = columns[pos if r % 2 == 0 else PER_ROW - 1 - pos]
+        y = TOP_Y + r * ROW
+        if i == len(TIMELINE) - 1:
+            s.raw(f'<circle cx="{x}" cy="{y}" r="13" fill="{t["card"]}" stroke="{t["red"]}" stroke-width="1.5" opacity=".6"/><circle cx="{x}" cy="{y}" r="8" fill="{t["red"]}"/>')
+        else:
+            s.raw(f'<circle cx="{x}" cy="{y}" r="8" fill="{t["card"]}" stroke="{t["ink"]}" stroke-width="2.5"/>')
+        py = y + 22
+        s.raw(f'<rect x="{x}" y="{py}" width="{plate_w}" height="{plate_h}" rx="14" fill="#FFFFFF" stroke="{t["border"]}" stroke-width="1.5"/>')
+        s.raw(f'<image x="{x + 14}" y="{py + 10}" width="{plate_w - 28}" height="{plate_h - 20}" href="{logo_uri(logo)}"/>')
+        tx = x + plate_w + 18
+        s.text(tx, py + 14, dates, MONO, 14.5, t["muted"])
+        s.text(tx, py + 41, org, SANS[700], 22, t["text"])
+        s.text(tx, py + 65, role, SANS[500], 15.5, t["muted"])
     return s.render()
 
 
